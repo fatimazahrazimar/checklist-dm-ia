@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Checklist Réglementaire DM IA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin:0; padding: 0;
+      background-image: url('image.jpg.jpeg'); 
+      background-size: cover;
+      background-position: top 80px center;
+      background-repeat: no-repeat;
+      min-height: 100vh;
+    }
+    header { 
+      background: #82b8ea;
+      color: #0a0a0a; 
+      padding: 10px 10px; 
+      display: flex; 
+      align-items: flex-end; 
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .header-titles { flex: 1 1 350px; min-width: 250px; }
+    .header-photos { display: flex; gap: 10px; align-items: flex-end; }
+    .photo-group { display: flex; flex-direction: column; align-items: center; }
+    .photo-group img {
+      width: 52px; height: 52px; object-fit: cover;
+      border-radius: 50%; border:2px solid #fff;
+      background: #fafafa; margin-bottom: 2px;
+    }
+    .photo-name { font-size: 0.96em; font-weight: bold; line-height: 1; text-align: center; }
+    .photo-prenom { font-size: 0.87em; text-align: center; color: #e7b3b3; }
+    h1 { margin:0 0 8px 0; font-size: 1.23em; text-align:center; }
+    #connexion { max-width: 900px; margin-left: 100px; }
+    .container {
+      max-width: 1200px;
+      margin: 30px auto;
+      background: rgba(255,255,255,0.93);
+      padding: 30px;
+      border-radius:10px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.18);
+    }
+    .hide { display: none }
+    input[type="text"], select { width: 95%; padding: 7px; margin: 8px 0 16px 0; border-radius: 4px; border:1px solid #ccc;}
+    button { background:#04284b; color: #fff; border:none; padding:10px 17px; border-radius:5px; font-weight:bold; cursor:pointer;}
+    button:hover { background: #00b315 }
+    table { border-collapse: collapse; width: 100%; margin: 6px 0;}
+    th, td { border:1px solid #ddd; padding:8px; text-align:left; vertical-align:top;}
+    /* Font-size uniforme pour les 3 colonnes principales */
+    td:nth-child(2) { font-size: 0.85em; font-weight: 600;text-align: justify;}  /* Exigence / Action */
+    td:nth-child(3) span { font-size: 0.75em !important; }  /* Critère (titre) */
+    td:nth-child(5) { font-size: 0.85em; }  /* Objectif */
+    td:nth-child(6) { font-size: 0.85em; } 
+
+    th { background: #eef; }
+    nav { margin-bottom: 18px; }
+    .tab-btn { background: #e9e9e9; color: #81b5e9; margin-right:5px; border:none; border-radius:5px 5px 0 0; padding:7px 13px;}
+    .tab-btn.selected, .tab-btn:hover { background: #89b9ea; color:#fff;}
+    .faq-question {font-weight:bold; margin-top:1em;}
+    .small { font-size:0.92em; color:#b0b5ee;}
+    .section-row td {
+      background:#dfeeff;
+      font-weight:bold;
+      text-align:center;
+    }
+
+    /* Élargir colonne Critères (3ème colonne) + texte justifié */
+    #checkTable td:nth-child(3) {
+      width: 22% !important;
+      min-width: 180px;
+    }
+    #checkTable td:nth-child(3) div:first-child {
+      text-align: justify;
+      text-justify: inter-word;
+    }
+    #checkTable td:nth-child(3) span {
+      text-align: justify;
+      display: block;
+    }
+
+
+    /* Bouton PDF moderne */
+.pdf-btn-container {
+  text-align: right;
+  margin-bottom: 6px;
+}
+.pdf-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #c84b3e 0%, #a0362e 100%);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.95em;
+  box-shadow: 0 4px 12px rgba(200, 75, 62, 0.3);
+  transition: all 0.3s ease;
+}
+.pdf-btn:hover {
+  background: linear-gradient(135deg, #a0362e 0%, #802821 100%);
+  box-shadow: 0 6px 16px rgba(200, 75, 62, 0.4);
+  transform: translateY(-2px);
+}
+.pdf-btn:active {
+  transform: translateY(0);
+}
+.pdf-icon {
+  width: 18px;
+  height: 18px;
+}
+
+  </style>
+</head>
+<body>
+<!-- Bouton PDF MODERNE - supprime l'ancien img src="pdf.jpg" -->
+
+<!-- Bouton FAQ EN BAS DROITE -->
+<img 
+  src="frequently-askedèquestion.avif" 
+  alt="FAQ" 
+  title="Voir la FAQ"
+  onclick="showTab('faq')" 
+  style="position:fixed; bottom:20px; right:20px; width:44px; height:44px; z-index:1001; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.10); border-radius:8px;">
+
+<header>
+  <div class="header-titles">
+    <h1>Checklist Réglementaire pour la Validation de l'Aptitude à l'Utilisation des Dispositifs Médicaux Intégrant l'IA</h1>
+    <div style="text-align:center;">Projet universitaire – IDS 299 (UTC)</div>
+  </div>
+  <div class="header-photos">
+    <div class="photo-group">
+      <img src="maria.jpg" alt="Maria">
+      <span class="photo-name">GAMBIE</span>
+      <span class="photo-prenom">Maria</span>
+    </div>
+    <div class="photo-group">
+      <img src="pauline.jpg" alt="Pauline">
+      <span class="photo-name">GRESSENT</span>
+      <span class="photo-prenom">Pauline</span>
+    </div>
+    <div class="photo-group">
+      <img src="med.jpg" alt="Mohammed">
+      <span class="photo-name">NAJI</span>
+      <span class="photo-prenom">Mohammed</span>
+    </div>
+    <div class="photo-group">
+      <img src="lyam.jpg" alt="Lyam">
+      <span class="photo-name">PATTE</span>
+      <span class="photo-prenom">Lyam</span>
+    </div>
+    <div class="photo-group">
+      <img src="me (2).jpg" alt="Fatima-Zahra">
+      <span class="photo-name">ZIMAR</span>
+      <span class="photo-prenom">Fatima-Zahra</span>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <!-- Connexion -->
+  <div id="connexion">
+    <h2>Connexion</h2>
+    <label>Nom : <input type="text" id="nom"></label><br>
+    <label>Prénom : <input type="text" id="prenom"></label><br>
+    <label>Société : <input type="text" id="societe"></label><br>
+    <label>Profession :
+      <select id="profession">
+        <option value="">Choisir</option>
+        <option>QARA</option>
+        <option>Développeur</option>
+        <option>Concepteur</option>
+        <option>Etudiant OU Professeur</option>
+        <option>Autre</option>
+      </select>
+    </label><br>
+    <button onclick="startApp()">Entrer</button>
+  </div>
+
+  <div id="app" class="hide">
+    <nav>
+      <button class="tab-btn" onclick="showTab('guide')">Guide</button>
+      <button class="tab-btn selected" onclick="showTab('checklist')">Checklist</button>
+    </nav>
+
+    <!-- GUIDE -->
+    <div id="guide" class="hide">
+      <h2>Guide d’utilisation – Checklist Réglementaire</h2>
+      <h3>Dispositifs Médicaux intégrant l’Intelligence Artificielle</h3>
+      <h3>INTRODUCTION</h3>
+      <h4>Objectif</h4>
+      <ul>
+        <li>Accompagner la phase de conception pour anticiper les exigences réglementaires.</li>
+        <li>Éviter les erreurs en amont de la certification.</li>
+        <li>Structurer la démarche qualité et réglementaire de manière progressive.</li>
+      </ul>
+      <h4>À qui s’adresse cet outil ?</h4>
+      <p>
+        Aux startups en phase de R&amp;D/prototypage qui développent un logiciel dispositif médical (SaMD)
+        intégrant de l’IA et qui souhaitent démarrer leur conformité réglementaire sans expertise préalable.
+      </p>
+      <h3>FONCTIONNEMENT DE LA CHECKLIST</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Colonne</th>
+            <th>Description</th>
+            <th>Comment l’utiliser</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Exigence</td>
+            <td>Référence normative</td>
+            <td>Identifiez le texte source.</td>
+          </tr>
+          <tr>
+            <td>Description</td>
+            <td>Détail de l’exigence</td>
+            <td>Comprenez ce qui est attendu.</td>
+          </tr>
+          <tr>
+            <td>Statut</td>
+            <td>Conforme / Non conforme</td>
+            <td>Évaluez votre situation.</td>
+          </tr>
+          <tr>
+            <td>Preuve</td>
+            <td>Document ou référence</td>
+            <td>Indiquez la preuve.</td>
+          </tr>
+          <tr>
+            <td>Commentaire</td>
+            <td>Notes internes</td>
+            <td>Ajoutez du contexte.</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3>MODE D’EMPLOI PAS À PAS</h3>
+      <h4>Étape 1 : Ouvrir la checklist</h4>
+      <p>Téléchargez ou ouvrez la checklist réglementaire fournie (version Excel ou version en ligne).</p>
+      <h4>Étape 2 : Remplir progressivement</h4>
+      <p>
+        Parcourez chaque exigence ligne par ligne et évaluez votre conformité
+        (statut, preuves, commentaires).
+      </p>
+      <h4>Étape 3 : Suivre l’avancement</h4>
+      <p>Utilisez les statuts pour visualiser votre progression globale.</p>
+      <h4>Étape 4 : Préparer l’audit</h4>
+      <p>Compilez toutes les preuves documentaires avant revue ou audit.</p>
+      <h3>CONSEILS D’UTILISATION</h3>
+      <h4>Bonnes pratiques</h4>
+      <ul>
+        <li>Ne sautez pas d’étapes : chaque exigence compte.</li>
+        <li>Documentez au fil de l’eau : ne remettez pas à plus tard.</li>
+        <li>Impliquez toute l’équipe : développeurs, chef de projet, responsable qualité.</li>
+        <li>Consultez la FAQ en cas de doute.</li>
+      </ul>
+      <h4>Pièges à éviter</h4>
+      <ul>
+        <li>Remplir la checklist “pour la forme” : visez la conformité réelle.</li>
+        <li>Négliger les exigences IA : elles sont cruciales pour les SaMD.</li>
+        <li>Oublier de mettre à jour les preuves : le dossier doit évoluer.</li>
+      </ul>
+    </div>
+
+    <!-- CHECKLIST -->
+    <div id="checklist">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+          <h2>Checklist interactive</h2>
+          <div class="pdf-btn-container">
+            <button class="pdf-btn" onclick="generatePDF()">
+              <svg class="pdf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><text x="8" y="16" font-size="8" font-weight="bold" fill="white">PDF</text>
+              </svg>
+              Télécharger PDF
+            </button>
+          </div>
+      </div>
+      
+      <table id="checkTable">
+        <thead>
+          <tr>
+            <th>N°</th>
+            <th>Exigence / Action</th>
+            <th>Critère</th>
+            <th>Pondération</th>
+            <th>Objectif</th>
+            <th>Référence</th>
+            <th>Statut</th>
+            <th>Responsable</th>
+            <th>Commentaires / Preuves (exemple de documents)</th>
+          </tr>
+        </thead>
+        <tbody id="tbodyChecklist"></tbody>
+      </table>
+      <p class="small">
+        Dans la colonne “Commentaires / Preuves”, les exemples indiquent les types de documents attendus
+        (rapports, plans, dossiers) et peuvent guider où ranger vos fichiers sur votre propre système.
+      </p>
+    </div>
+
+    <!-- FAQ -->
+    <!-- FAQ -->
+<div id="faq" class="hide">
+  <h2>FAQ principale</h2>
+  
+  <h3>Questions concernant la check-list</h3>
+  <div class="faq-question">Q1 : À quel moment dois-je commencer à utiliser cette checklist ?</div>
+  <div>Dès que vous avez une idée de produit avec une destination médicale revendiquée. L'idéal est de l'utiliser dès la phase de prototypage, avant même d'écrire la première ligne de code. Anticiper les exigences réglementaires dès la conception vous fera gagner du temps et de l'argent.</div>
+  
+  <div class="faq-question">Q2 : La checklist remplace-t-elle un consultant réglementaire ?</div>
+  <div>Non. Cette checklist est un outil d'aide à la structuration de votre démarche, mais elle ne remplace pas l'expertise d'un spécialiste pour des cas complexes, des audits ou la préparation finale du dossier technique. Considérez-la comme un guide de démarrage.</div>
+  
+  <div class="faq-question">Q3 : Puis-je omettre certaines exigences si mon logiciel est "simple" ?</div>
+  <div>Non. Toutes les exigences marquées "Toutes classes" sont obligatoires. Même un logiciel de classe I doit respecter les exigences essentielles du MDR. Vous pouvez adapter le niveau de détail selon la classe, mais pas ignorer les exigences.</div>
+
+  <h3>Questions sur la classification et le périmètre</h3>
+  <div class="faq-question">Q4 : Comment savoir si mon logiciel est un dispositif médical ?</div>
+  <div>Votre logiciel est un DM s'il est destiné par le fabricant à être utilisé à des fins médicales: diagnostic, prévention, surveillance, prédiction, pronostic ou traitement d'une maladie. Si vous revendiquez un bénéfice clinique, c'est probablement un DM. Consultez la Règle 11 de l'Annexe VIII et le MDCG 2019-11 pour plus de détails.</div>
+  
+  <div class="faq-question">Q5 : Mon logiciel utilise un simple algorithme de prédiction. Est-ce considéré comme de l'IA au sens de l'AI Act ?</div>
+  <div>Oui, probablement. L'AI Act définit l'IA de manière large, incluant le machine learning et les approches statistiques. Si votre algorithme apprend à partir de données ou utilise des techniques d'optimisation automatique, il entre dans le champ de l'AI Act.</div>
+  
+  <div class="faq-question">Q6 : Quelle est la différence entre classe IEC 62304 (A/B/C) et classe MDR (I/IIa/IIb/III) ?</div>
+  <div>
+    <strong>Classe MDR :</strong> classification réglementaire selon le risque pour le patient (détermine le parcours de certification)<br>
+    <strong>Classe IEC 62304 :</strong> classification technique du logiciel selon l'impact d'une défaillance (détermine le niveau de rigueur du développement)
+  </div>
+</div>
+
+
+<script>
+// Checklist complète A–E avec exemples de preuves (comm) figés
+const checklist = [
+  { section: true, titre: "A – DÉFINITION DU CONTEXTE D'UTILISATION" },
+  { n:"A.1", act:"Former les équipes cœur (conception, développement, validation) aux spécificités des systèmes IA embarqués dans les DM.", pond:"100%", obj:"S'assurer de la compétence des acteurs clés pour identifier, évaluer et maîtriser les risques IA.", ref:"AI Act art.4", statut:"", resp:"", comm:"Matrice de compétences et de responsabilités, CV et diplômes", critChecks:[true,true,true,true] },
+  { n:"A.2", act:"Préparer la spécification d'utilisation (indications, population cible, profil utilisateur, environnement, principe de fonctionnement, justification IA).", pond:"75%", obj:"Définir le contexte médical, utilisateur et le système IA dès le début du projet.", ref:"IEC 62366-1 §5.1 ; IEC 22989 §6.2.2", statut:"", resp:"", comm:"Spécifications d'utilisation et justification des choix", critChecks:[true,true,true,false] },
+  { n:"A.3", act:"Adapter le contenu et la durée de formation selon le contexte d'utilisation et les profils d'utilisateurs visés.", pond:"75%", obj:"Ajuster la formation en fonction des risques, de l'autonomie et des compétences.", ref:"AI Act art.4 ; ISO 62366-1 §5.3", statut:"", resp:"", comm:"Essais d'efficacité de formation", critChecks:[true,true,true,false] },
+  { n:"A.4", act:"Prendre en compte le contexte d'utilisation dans la conception des jeux de données.", pond:"50%", obj:"Aligner données d'entraînement, de validation et de test sur le contexte clinique réel.", ref:"AI Act art.10 §4 ; ISO 62366-1 §5.3", statut:"", resp:"", comm:"Rapport comparatif des données d'entraînement et des spécifications", critChecks:[true,true,false,false] },
+  { n:"A.5", act:"Prendre en compte les groupes vulnérables dans le design.", pond:"50%", obj:"Adapter interfaces et messages pour les populations sensibles.", ref:"AI Act art.9 §9 & art.5(b)", statut:"", resp:"", comm:"Rapport d'étude de la performance du logiciel en conditions réelles", critChecks:[true,true,false,false] },
+  { n:"A.6", act:"Décrire les limites, les performances et les conditions d'emploi.", pond:"50%", obj:"Permettre à l'utilisateur d'évaluer la fiabilité et les limites du système.", ref:"AI Act art.13 §3 b (ii-iii)", statut:"", resp:"", comm:"Plan et dossier de gestion de l'aptitude à l'utilisation", critChecks:[true,true,false,false] },
+
+  { section: true, titre: "B – PILOTAGE DU PROCESSUS D'APTITUDE À L'UTILISATION" },
+  { n:"B.1", act:"Désigner un responsable du processus d'aptitude à l'utilisation et définir clairement ses rôles et responsabilités.", pond:"75%", obj:"Assurer un pilotage clair du processus d'aptitude à l'utilisation sur tout le cycle de vie.", ref:"IEC 62366-1 §4.1.1", statut:"", resp:"", comm:"Dossier d'analyse de risques", critChecks:[true,true,true,false] },
+  { n:"B.2", act:"Planifier les activités d'aptitude à l'utilisation (objectifs, livrables, jalons, ressources, validations).", pond:"75%", obj:"Structurer et documenter l'ensemble des activités liées à l'aptitude à l'utilisation.", ref:"IEC 62366-1 §5.1", statut:"", resp:"", comm:"Dossier d'aptitude à l'utilisation", critChecks:[true,true,true,false] },
+  { n:"B.3", act:"Assurer la coordination entre les équipes IA, clinique, qualité, réglementation et conception UX.", pond:"50%", obj:"Garantir une vision partagée des exigences d'utilisation et des risques associés.", ref:"IEC 62366-1 §4.1.2", statut:"", resp:"", comm:"Processus de supervision et de surveillance du logiciel", critChecks:[true,true,false,false] },
+  { n:"B.4", act:"Suivre régulièrement l'avancement du processus d'aptitude à l'utilisation (revues, indicateurs, actions correctives).", pond:"50%", obj:"Détecter précocement les écarts et adapter le processus si nécessaire.", ref:"IEC 62366-1 §5.8", statut:"", resp:"", comm:"Rapport d'analyse de risques résiduels", critChecks:[true,true,false,false] },
+
+  { section: true, titre: "C – MAÎTRISE DU RISQUE D'USAGE" },
+  { n:"C.1", act:"Transparence et informations à l'utilisateur (UI + IFU).", pond:"100%", obj:"Permettre un usage avisé et éviter les interprétations erronées.", ref:"AI Act art.13", statut:"", resp:"", comm:"Documents et informations d'accompagnement du logiciel", critChecks:[true,true,true,true] },
+  { n:"C.2", act:"Appliquer la maîtrise du risque pour la conception de l'interface utilisateur en respectant l'ordre de priorité : sécurité inhérente, mesures de protection, informations de sécurité.", pond:"100%", obj:"Réduire les risques d'erreurs d'utilisation et assurer la sûreté de conception.", ref:"IEC 62366-1 §4.1.2", statut:"", resp:"", comm:"Analyse des risques et mesures de réduction des erreurs d'utilisation", critChecks:[true,true,true,true] },
+  { n:"C.3", act:"Intégrer les informations relatives à la sécurité dans le processus d'ingénierie pour s'assurer qu'elles sont perceptibles et compréhensibles par les utilisateurs.", pond:"100%", obj:"Assurer la pertinence des informations de sécurité fournies aux utilisateurs.", ref:"IEC 62366-1 §4.1.3", statut:"", resp:"", comm:"Évaluation des documents et informations d'accompagnement", critChecks:[true,true,true,true] },
+  { n:"C.4", act:"Mettre en place un plan d'évaluations formatives (IEC 62366) ciblant l'IA.", pond:"100%", obj:"Détecter précocement les erreurs d'utilisation liées à l'IA.", ref:"AI Act art.13–14–15 (via IEC 62366)", statut:"", resp:"", comm:"Protocole d'évaluation formative", critChecks:[true,true,true,true] },
+  { n:"C.5", act:"Prendre en compte les groupes vulnérables dans l'analyse de risques.", pond:"75%", obj:"Protéger les groupes à risque d'effets disproportionnés.", ref:"AI Act art. 9 §9", statut:"", resp:"", comm:"Intégration de représentants de groupes vulnérables dans l'évaluation", critChecks:[true,true,true,false] },
+  { n:"C.6", act:"Identifier et analyser les risques prévisibles liés à l'usage et à l'environnement.", pond:"50%", obj:"Garantir la sécurité d'usage et la robustesse fonctionnelle.", ref:"AI Act art. 9 §2(a-b) ; ISO 62366-1 §5.4", statut:"", resp:"", comm:"Analyse de risque sur l'utilisation du dispositif", critChecks:[true,true,false,false] },
+  { n:"C.7", act:"Déterminer et appliquer les mesures de maîtrise adaptées.", pond:"100%", obj:"Assurer un risque résiduel acceptable.", ref:"AI Act art. 9 §2(d)-§5", statut:"", resp:"", comm:"Rapport de maîtrise et d'atténuation des risques", critChecks:[true,true,true,true] },
+  { n:"C.8", act:"Empêcher l'exploitation de vulnérabilités individuelles.", pond:"75%", obj:"Protéger les utilisateurs vulnérables.", ref:"AI Act, art. 5(1)(b)", statut:"", resp:"", comm:"Mesures d'accessibilité de l'interface (taille, couleur...)", critChecks:[true,true,true,false] },
+  { n:"C.9", act:"Concevoir pour éliminer ou réduire le risque à la source.", pond:"100%", obj:"Réduire le risque par design (“safety by design”).", ref:"AI Act art. 9 §5(a) ; IEC 62304 §5.2", statut:"", resp:"", comm:"Exigences UI issues de l'analyse de risque", critChecks:[true,true,true,true] },
+  { n:"C.10", act:"Former et qualifier les utilisateurs et déployeurs.", pond:"75%", obj:"Garantir que toute personne utilisant le DM IA comprend son fonctionnement, ses limites et ses risques.", ref:"AI Act art. 4 §1", statut:"", resp:"", comm:"Plan de formation utilisateur", critChecks:[true,true,true,false] },
+  { n:"C.11", act:"Concevoir la robustesse et la fiabilité perçue par l'utilisateur.", pond:"100%", obj:"S'assurer que le système réagit de manière stable, compréhensible et prévisible.", ref:"AI Act art. 15 §1-3", statut:"", resp:"", comm:"Évaluation de la fiabilité et de la perception", critChecks:[true,true,true,true] },
+  { n:"C.12", act:"Fournir une notice d'utilisation claire, concise et adaptée.", pond:"100%", obj:"Assurer que la documentation fournie est compréhensible, complète et utilisable.", ref:"AI Act art. 13 §2 & §3 b (i-iii)", statut:"", resp:"", comm:"Évaluation des documents d'accompagnement", critChecks:[true,true,true,true] },
+  { n:"C.13", act:"Informer sur la maintenance, les mises à jour et la durée de vie.", pond:"75%", obj:"Garantir que l'utilisateur sache comment maintenir la performance et la sécurité.", ref:"AI Act art. 13 §3 e", statut:"", resp:"", comm:"Plan de formation et maintenance du logiciel", critChecks:[true,true,true,false] },
+  { n:"C.14", act:"Intégrer les mesures de maîtrise du risque dans les exigences logicielles.", pond:"100%", obj:"Inclure les mesures de maitrise du risque du logiciel dans la conception.", ref:"IEC 62304 §5.2.3", statut:"", resp:"", comm:"Exigences logicielles incluant les mesures de maîtrise", critChecks:[true,true,true,true] },
+
+  { section: true, titre: "D – SURVEILLANCE DU SYSTÈME PAR LES UTILISATEURS / RISQUES LIÉS À L'UTILISATION" },
+  { n:"D.1", act:"Conception de la supervision humaine (HITL/HOTL).", pond:"100%", obj:"Garantir la possibilité d'intervenir et corriger.", ref:"AI Act art.14", statut:"", resp:"", comm:"Plan de surveillance post-commercialisation", critChecks:[true,true,true,true] },
+  { n:"D.2", act:"Identifier les caractéristiques de l'interface utilisateur liées à la sécurité et les erreurs d'utilisation possibles via l'analyse des tâches.", pond:"75%", obj:"Identifier les facteurs de risque liés à l'interface afin de prévenir les usages incorrects.", ref:"IEC 62366-1 §5.2", statut:"", resp:"", comm:"Analyse des tâches et facteurs de risque UI", critChecks:[true,true,true,false] },
+  { n:"D.3", act:"Identifier les phénomènes dangereux et situations dangereuses connus ou prévisibles liés à l'utilisation du dispositif médical.", pond:"50%", obj:"Reconnaître les dangers potentiels dès la conception.", ref:"IEC 62366-1 §5.3", statut:"", resp:"", comm:"Analyse des phénomènes et situations dangereuses", critChecks:[true,true,false,false] },
+  { n:"D.4", act:"Interdire toute fonctionnalité d'influence subliminale ou manipulatrice.", pond:"50%", obj:"Garantir la sécurité psychologique et la prise de décision éclairée des utilisateurs.", ref:"AI Act art. 5(1)(a)", statut:"", resp:"", comm:"Documents expliquant l'absence de techniques manipulatrices", critChecks:[true,true,false,false] },
+  { n:"D.5", act:"Éviter toute inférence émotionnelle ou biométrique non médicale.", pond:"50%", obj:"Garantir la finalité médicale et limiter l'usage des données biométriques.", ref:"AI Act art. 5(1)(f)-(g)", statut:"", resp:"", comm:"Dossier de conception (choix sur les données biométriques)", critChecks:[true,true,false,false] },
+  { n:"D.6", act:"Démontrer la maîtrise humaine du système.", pond:"100%", obj:"S'assurer que l'humain conserve la capacité de contrôler, interrompre ou corriger le système.", ref:"AI Act art. 4 §1 & 14 §1-3", statut:"", resp:"", comm:"Dossier de conception (mécanismes de contrôle humain)", critChecks:[true,true,true,true] },
+  { n:"D.7", act:"Fournir une transparence suffisante pour interpréter les sorties.", pond:"100%", obj:"Concevoir le système de sorte que les résultats puissent être compris et expliqués.", ref:"AI Act art. 13 §1 & §3 b (iv, vii)", statut:"", resp:"", comm:"Documentation de la logique de décision, écrans explicatifs", critChecks:[true,true,true,true] },
+  { n:"D.8", act:"Prévoir des mécanismes d'alerte et de retour utilisateur.", pond:"100%", obj:"Permettre de signaler un dysfonctionnement, une incertitude ou un doute sur la sortie.", ref:"AI Act art. 14 §2-3", statut:"", resp:"", comm:"Fonctions de feedback, boutons de signalement, journaux", critChecks:[true,true,true,true] },
+  { n:"D.9", act:"Garantir la traçabilité des interactions homme-IA.", pond:"75%", obj:"Enregistrer automatiquement les événements d'utilisation pertinents.", ref:"AI Act art. 12 §1-3 a-d", statut:"", resp:"", comm:"Logs et journaux d'interactions", critChecks:[true,true,true,false] },
+  { n:"D.10", act:"Expliquer la logique du modèle ou les critères de décision.", pond:"100%", obj:"Permettre à l'utilisateur de comprendre pourquoi une sortie ou recommandation a été produite.", ref:"AI Act art. 13 §1 & 15 §1", statut:"", resp:"", comm:"Documentation expliquant la logique du modèle", critChecks:[true,true,true,true] },
+
+  { section: true, titre: "E – AMÉLIORATION CONTINUE" },
+  { n:"E.1", act:"Plan de PMS IA et de détection de dérive (prévu dès la conception).", pond:"75%", obj:"Faciliter le suivi post-marché et l'amélioration continue.", ref:"AI Act art.72 (PMS), art.73 (incidents)", statut:"", resp:"", comm:"Plan de surveillance post-commercialisation", critChecks:[true,true,true,false] },
+  { n:"E.2", act:"Identifier et combler les lacunes dans les données via un processus de détection des données manquantes ou insuffisantes et décrire comment elles sont complétées.", pond:"50%", obj:"Éviter les défaillances fonctionnelles dues à un jeu de données incomplet.", ref:"AI Act art. 10 §2(h)", statut:"", resp:"", comm:"Procédure de détection et complétude des données", critChecks:[true,true,false,false] }
+];
+
+function startApp() {
+  const nom = document.getElementById('nom').value.trim();
+  const prenom = document.getElementById('prenom').value.trim();
+  if(!nom || !prenom) { alert("Merci de saisir nom et prénom."); return; }
+  document.getElementById('connexion').classList.add('hide');
+  document.getElementById('app').classList.remove('hide');
+  showTab('checklist');
+  renderChecklist();
+}
+
+function showTab(tab) {
+  document.getElementById('guide').classList.add('hide');
+  document.getElementById('checklist').classList.add('hide');
+  document.getElementById('faq').classList.add('hide');
+  document.getElementById(tab).classList.remove('hide');
+  let tbs = document.querySelectorAll('.tab-btn');
+  for (let i=0; i<tbs.length; i++) tbs[i].classList.remove('selected');
+  if(tab==='guide') tbs[0].classList.add('selected');
+  if(tab==='checklist') tbs[1].classList.add('selected');
+}
+
+function applyPondStyle(td, pondStr) {
+  td.style.backgroundColor = "white";
+  const v = parseInt(pondStr);
+  if (v === 25) td.style.backgroundColor = "#c6f6c6";   // vert
+  if (v === 50) td.style.backgroundColor = "#fff8b3";   // jaune
+  if (v === 75) td.style.backgroundColor = "#ffe4b3";   // orange
+  if (v === 100) td.style.backgroundColor = "#ffb3b3";  // rouge
+}
+
+function renderChecklist() {
+  const tbody = document.getElementById('tbodyChecklist');
+  tbody.innerHTML = '';
+
+  checklist.forEach((item, idx) => {
+    if (item.section) {
+      const trSec = document.createElement('tr');
+      trSec.className = 'section-row';
+      const tdSec = document.createElement('td');
+      tdSec.colSpan = 9;
+      tdSec.textContent = item.titre;
+      trSec.appendChild(tdSec);
+      tbody.appendChild(trSec);
+      return;
+    }
+
+    const tr = document.createElement('tr');
+
+    // N°
+    let td = document.createElement('td');
+    td.textContent = item.n;
+    tr.appendChild(td);
+
+    // Exigence / Action
+    td = document.createElement('td');
+    td.textContent = item.act;
+    tr.appendChild(td);
+
+    // Colonne CRITÈRES (4 SVG figés)
+    td = document.createElement('td');
+    td.style.verticalAlign = "top";
+    td.style.padding = "4px";
+
+    const critText = document.createElement('div');
+    critText.textContent = item.crit;
+    critText.style.fontSize = "0.75em";
+    critText.style.color = "#222";
+    critText.style.marginBottom = "4px";
+    td.appendChild(critText);
+
+    const critLabels = [
+      "Impact sur la sécurité d'usage / risque d'erreur humaine",
+      "Impact sur la compréhension / interprétation de l'IA",
+      "Impact sur la supervision humaine",
+      "Impact sur la conformité réglementaire (IA Act / MDR)"
+    ];
+
+    const checks = item.critChecks || [false,false,false,false];
+
+    critLabels.forEach((label, i) => {
+      const row = document.createElement('div');
+      row.style.display = "flex";
+      row.style.alignItems = "center";
+      row.style.marginBottom = "2px";
+
+      // SVG case vide
+      const svgEmpty = '<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="12" height="12" fill="white" stroke="#555" stroke-width="1.2"/></svg>';
+      
+      // SVG case pleine avec coche
+      const svgFull = '<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="12" height="12" fill="#04284b" stroke="#04284b" stroke-width="1.2"/><polyline points="3,8 6,11 11,4" fill="none" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+      const icon = document.createElement('span');
+      icon.innerHTML = checks[i] ? svgFull : svgEmpty;
+      icon.style.display = "inline-block";
+      icon.style.marginRight = "4px";
+
+      const span = document.createElement('span');
+      span.textContent = " " + label;
+      span.style.fontSize = "0.72em";
+
+      row.appendChild(icon);
+      row.appendChild(span);
+      td.appendChild(row);
+    });
+
+    tr.appendChild(td);
+
+    // Pondération (fixe, couleur dérivée)
+    td = document.createElement('td');
+    td.textContent = item.pond;
+    td.style.textAlign = "center";
+    td.style.fontWeight = "bold";
+    applyPondStyle(td, item.pond);
+    tr.appendChild(td);
+
+    // Objectif
+    td = document.createElement('td');
+    td.textContent = item.obj;
+    tr.appendChild(td);
+
+    // Référence
+    td = document.createElement('td');
+    td.textContent = item.ref;
+    tr.appendChild(td);
+
+    // Statut
+    td = document.createElement('td');
+    const select = document.createElement('select');
+    ["", "À faire", "En cours", "Terminé"].forEach(opt => {
+      const o = document.createElement('option');
+      o.value = opt;
+      o.text = opt;
+      if (item.statut === opt) o.selected = true;
+      select.appendChild(o);
+    });
+    select.onchange = function(){ checklist[idx].statut = this.value; };
+    td.appendChild(select);
+    tr.appendChild(td);
+
+    // Responsable
+    td = document.createElement('td');
+    const inresp = document.createElement('input');
+    inresp.type = 'text';
+    inresp.value = item.resp;
+    inresp.oninput = function(){ checklist[idx].resp = this.value; };
+    td.appendChild(inresp);
+    tr.appendChild(td);
+
+    // Commentaires / Preuves + upload
+    td = document.createElement('td');
+    td.style.fontSize = "0.8em";
+    td.style.color = "#555";
+    td.style.backgroundColor = "#f5f5f5";
+    td.style.whiteSpace = "normal";
+    td.style.maxWidth = "260px";
+
+    const hint = document.createElement('div');
+    hint.textContent = item.comm;
+    hint.style.marginBottom = "4px";
+
+    const fileInput = document.createElement('input');
+    fileInput.type = "file";
+    fileInput.style.fontSize = "0.75em";
+
+    td.appendChild(hint);
+    td.appendChild(fileInput);
+    tr.appendChild(td);
+
+    tbody.appendChild(tr);
+  });
+}
+
+function generatePDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF('l', 'mm', 'a4'); // 'l' = landscape
+  
+  // Titre
+  doc.setFontSize(16);
+  doc.setFont(undefined, 'bold');
+  doc.text('Checklist Réglementaire - Validation de l\'Aptitude à l\'Utilisation', 14, 15);
+  
+  // Infos utilisateur
+  const nom = document.getElementById('nom').value || '—';
+  const prenom = document.getElementById('prenom').value || '—';
+  const societe = document.getElementById('societe').value || '—';
+  const profession = document.getElementById('profession').value || '—';
+  
+  doc.setFontSize(10);
+  doc.setFont(undefined, 'normal');
+  doc.text(`Nom: ${nom}  |  Prénom: ${prenom}  |  Société: ${societe}  |  Profession: ${profession}`, 14, 22);
+  
+  // Collecte des données
+  const tableData = [];
+  const headers = ['N°', 'Exigence/Action', 'Pondération', 'Objectif', 'Référence', 'Statut', 'Responsable', 'Commentaires'];
+
+checklist.forEach(item => {
+  if (item.section) {
+    tableData.push([{ 
+      content: item.titre,
+      colSpan: headers.length,
+      styles: { fillColor: [223, 238, 255], fontStyle: 'bold', halign: 'center' }
+    }]);
+  } else {
+    const critChecked = (item.critChecks || []).filter(c => c).length;
+    const critStr = `${critChecked}/4`;
+
+    tableData.push([
+      item.n,
+      item.act,
+      item.pond,
+      item.obj,
+      item.ref,
+      item.statut || '—',
+      item.resp || '—',
+      `${critStr} · ${item.comm}`
+    ]);
+  }
+});
+
+  
+  doc.autoTable({
+  head: [headers],
+  body: tableData,
+  startY: 28,
+  margin: 10,
+  styles: { fontSize: 8, cellPadding: 2, overflow: 'linebreak', halign: 'left' },
+  headStyles: { fillColor: [130,184,234], textColor: [0,0,0], fontStyle: 'bold' },
+  alternateRowStyles: { fillColor: [245,245,245] }
+});
+
+  const timestamp = new Date().toISOString().split('T')[0];
+  doc.save(`Checklist-${prenom}-${nom}-${timestamp}.pdf`);
+}
+
+</script>
+
+
+</body>
+</html>
