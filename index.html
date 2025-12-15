@@ -192,13 +192,6 @@
           <option value="3">Classe III</option>
         </select>
       </label>
-      <label>Niveau AI Act :
-        <select id="niveauAi">
-          <option value="1">AI Act minimal</option>
-          <option value="1.3">AI Act limité</option>
-          <option value="2">AI Act haut risque</option>
-        </select>
-      </label>
       <label>IA composante de sécurité :
         <select id="iaSecu">
           <option value="1">Non</option>
@@ -215,94 +208,95 @@
       <span id="coefGlobalDisplay" style="margin-left:10px; font-weight:bold;"></span>
     </div>
 
-    <div id="guide" class="hide">
-      <h2>Guide d’utilisation – Checklist Réglementaire</h2>
-      <h3>Dispositifs Médicaux intégrant l’Intelligence Artificielle</h3>
+<div id="guide" class="hide">
+  <h2>Guide d'utilisation – Checklist Réglementaire</h2>
+  
+  <h3>1. Introduction</h3>
+  <p>Ce guide vous explique comment utiliser efficacement la Checklist Réglementaire pour la conception de logiciels dispositifs médicaux intégrant l'intelligence artificielle.</p>
+  
+  <h4>Objectif</h4>
+  <ul>
+    <li>Accompagner la phase de conception pour anticiper les exigences réglementaires</li>
+    <li>Éviter les erreurs en amont de la certification</li>
+    <li>Structurer la démarche qualité et réglementaire de manière progressive</li>
+  </ul>
 
-      <h3>INTRODUCTION</h3>
-      <h4>Objectif</h4>
-      <ul>
-        <li>Accompagner la phase de conception pour anticiper les exigences réglementaires.</li>
-        <li>Éviter les erreurs en amont de la certification.</li>
-        <li>Structurer la démarche qualité et réglementaire de manière progressive.</li>
-      </ul>
+  <h4>À qui s'adresse cet outil ?</h4>
+  <p>Aux startups en phase de R&D/prototypage qui développent un logiciel dispositif médical (SaMD) intégrant de l'IA et qui souhaitent démarrer leur conformité réglementaire sans expertise préalable.</p>
 
-      <h4>À qui s’adresse cet outil ?</h4>
-      <p>
-        Aux startups en phase de R&amp;D/prototypage qui développent un logiciel dispositif médical (SaMD)
-        intégrant de l’IA et qui souhaitent démarrer leur conformité réglementaire sans expertise préalable.
-      </p>
+  <h3>2. Fonctionnement de la checklist</h3>
+  <table style="margin: 20px 0;">
+    <thead>
+      <tr><th>Colonne</th><th>Description</th><th>Comment l'utiliser</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Bloc de classification</td><td>Classe MDR, IA sécurité, Rôle autonome</td><td>Remplir selon caractéristiques du dispositif</td></tr>
+      <tr><td>N°</td><td>Numéro unique</td><td>Référencer facilement les exigences</td></tr>
+      <tr><td>Exigence / action</td><td>Ce qui doit être réalisé</td><td>Formuler comme une action concrète et mesurable</td></tr>
+      <tr><td>Critères de pondération</td><td>4 critères pour évaluer l'exigence</td><td>Définir la criticité dans le périmètre du projet</td></tr>
+      <tr><td>Score</td><td>Critères × coefficient global</td><td>Calcul automatique - détermine l'importance</td></tr>
+      <tr><td>Objectif</td><td>Ce qui est essentiel à retenir</td><td>Formuler plus simplement l'exigence</td></tr>
+      <tr><td>Référence</td><td>Norme ou article</td><td>Indication sur le référentiel utilisé</td></tr>
+      <tr><td>Preuve Attendue</td><td>Forme du justificatif de conformité</td><td>Donner une indication sur la forme des preuves</td></tr>
+      <tr><td>Statut</td><td>État d'avancement</td><td>À faire / En cours / Terminé</td></tr>
+      <tr><td>Responsable</td><td>Qui pilote cette exigence ?</td><td>Nom ou rôle (ex: Responsable Qualité)</td></tr>
+      <tr><td>Preuve traçable</td><td>Justificatif de conformité</td><td>Lien vers rapport, fichier, ou référence</td></tr>
+    </tbody>
+  </table>
 
-      <h3>FONCTIONNEMENT DE LA CHECKLIST</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Colonne</th>
-            <th>Description</th>
-            <th>Comment l’utiliser</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Exigence</td>
-            <td>Référence normative</td>
-            <td>Identifiez le texte source.</td>
-          </tr>
-          <tr>
-            <td>Description</td>
-            <td>Détail de l’exigence</td>
-            <td>Comprenez ce qui est attendu.</td>
-          </tr>
-          <tr>
-            <td>Statut</td>
-            <td>Conforme / Non conforme</td>
-            <td>Évaluez votre situation.</td>
-          </tr>
-          <tr>
-            <td>Preuve</td>
-            <td>Document ou référence</td>
-            <td>Indiquez la preuve.</td>
-          </tr>
-          <tr>
-            <td>Commentaire</td>
-            <td>Notes internes</td>
-            <td>Ajoutez du contexte.</td>
-          </tr>
-        </tbody>
-      </table>
+<h4>Bloc d'acceptabilité du risque</h4>
+<table style="width:100%; margin:20px 0; border-collapse:collapse; font-size:0.95em;">
+  <thead>
+    <tr style="background:#eef;">
+      <th style="padding:12px 8px; border:1px solid #ddd; width:25%;">Niveau</th>
+      <th style="padding:12px 8px; border:1px solid #ddd;">Score</th>
+      <th style="padding:12px 8px; border:1px solid #ddd;">Priorité</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="background:#d4edda; color:#155724;">
+      <td style="padding:12px 8px; border:1px solid #ddd; font-weight:bold;">🟢 FAIBLE</td>
+      <td style="padding:12px 8px; border:1px solid #ddd; text-align:center; font-weight:bold;">1-7</td>
+      <td style="padding:12px 8px; border:1px solid #ddd;">Exigence optionnelle ou allégée</td>
+    </tr>
+    <tr style="background:#fff3cd; color:#856404;">
+      <td style="padding:12px 8px; border:1px solid #ddd; font-weight:bold;">🟡 MODÉRÉE</td>
+      <td style="padding:12px 8px; border:1px solid #ddd; text-align:center; font-weight:bold;">7-14</td>
+      <td style="padding:12px 8px; border:1px solid #ddd;">Exigence standard</td>
+    </tr>
+    <tr style="background:#f8d7da; color:#721c24;">
+      <td style="padding:12px 8px; border:1px solid #ddd; font-weight:bold;">🔴 CRITIQUE</td>
+      <td style="padding:12px 8px; border:1px solid #ddd; text-align:center; font-weight:bold;">14+</td>
+      <td style="padding:12px 8px; border:1px solid #ddd;">Exigence prioritaire</td>
+    </tr>
+  </tbody>
+</table>
 
-      <h3>MODE D’EMPLOI PAS À PAS</h3>
-      <h4>Étape 1 : Ouvrir la checklist</h4>
-      <p>Téléchargez ou ouvrez la checklist réglementaire fournie (version Excel ou version en ligne).</p>
+  <h3>3. Mode d'emploi pas à pas</h3>
+  <ol>
+    <li><strong>Étape 1 :</strong> Remplir le Bloc de classification selon votre dispositif</li>
+    <li><strong>Étape 2 :</strong> Pour chaque exigence : lire → assigner responsable → Mettez à jour le statut au fur et à mesure → Joignez la preuve (lien vers document, rapport…)</li>
+    <li><strong>Étape 3 :</strong> Suivre les codes couleurs (vert/orange/rouge)</li>
+    <li><strong>Étape 4 :</strong> Vérifier avant audit : tous statuts à jour + preuves documentées</li>
+  </ol>
 
-      <h4>Étape 2 : Remplir progressivement</h4>
-      <p>
-        Parcourez chaque exigence ligne par ligne et évaluez votre conformité
-        (statut, preuves, commentaires).
-      </p>
+  <h3>4. Conseils d'utilisation</h3>
+  <h4> 🟢 Bonnes pratiques</h4>
+  <ul>
+    <li>Ne sautez pas d'étapes : chaque exigence compte</li>
+    <li>Documentez au fil de l'eau</li>
+    <li>Impliquez toute l'équipe</li>
+    <li>Consultez la FAQ en cas de doute</li>
+  </ul>
 
-      <h4>Étape 3 : Suivre l’avancement</h4>
-      <p>Utilisez les statuts pour visualiser votre progression globale.</p>
+  <h4>🔴 Pièges à éviter</h4>
+  <ul>
+    <li>Remplir "pour la forme" sans réaliser les actions</li>
+    <li>Négliger les exigences IA</li>
+    <li>Oublier de mettre à jour les preuves</li>
+  </ul>
+</div>
 
-      <h4>Étape 4 : Préparer l’audit</h4>
-      <p>Compilez toutes les preuves documentaires avant revue ou audit.</p>
-
-      <h3>CONSEILS D’UTILISATION</h3>
-      <h4>Bonnes pratiques</h4>
-      <ul>
-        <li>Ne sautez pas d’étapes : chaque exigence compte.</li>
-        <li>Documentez au fil de l’eau : ne remettez pas à plus tard.</li>
-        <li>Impliquez toute l’équipe : développeurs, chef de projet, responsable qualité.</li>
-        <li>Consultez la FAQ en cas de doute.</li>
-      </ul>
-
-      <h4>Pièges à éviter</h4>
-      <ul>
-        <li>Remplir la checklist “pour la forme” : visez la conformité réelle.</li>
-        <li>Négliger les exigences IA : elles sont cruciales pour les SaMD.</li>
-        <li>Oublier de mettre à jour les preuves : le dossier doit évoluer.</li>
-      </ul>
-    </div>
 
     <div id="checklist">
       <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -406,10 +400,10 @@ const checklist = [
   { n:"A.6", act:"Décrire les limites, les performances et les conditions d'emploi.", obj:"Permettre à l'utilisateur d'évaluer la fiabilité et les limites du système.", ref:"Règlement (UE) 2024/1689 art.13 §3 b (ii-iii)", statut:"", resp:"", comm:"Plan et dossier de gestion de l'aptitude à l'utilisation", critChecks:[true,true,false,false] },
 
   { section: true, titre: "B – PILOTAGE DU PROCESSUS D'APTITUDE À L'UTILISATION" },
-  { n:"B.1", act:"Désigner un responsable du processus d'aptitude à l'utilisation et définir clairement ses rôles et responsabilités.", obj:"Assurer un pilotage clair du processus d'aptitude à l'utilisation sur tout le cycle de vie.", ref:"IEC 62366-1 §4.1.1", statut:"", resp:"", comm:"Dossier d'analyse de risques", critChecks:[true,true,true,false] },
-  { n:"B.2", act:"Planifier les activités d'aptitude à l'utilisation (objectifs, livrables, jalons, ressources, validations).", obj:"Structurer et documenter l'ensemble des activités liées à l'aptitude à l'utilisation.", ref:"IEC 62366-1 §5.1", statut:"", resp:"", comm:"Dossier d'aptitude à l'utilisation", critChecks:[true,true,true,false] },
-  { n:"B.3", act:"Assurer la coordination entre les équipes IA, clinique, qualité, réglementation et conception UX.", obj:"Garantir une vision partagée des exigences d'utilisation et des risques associés.", ref:"IEC 62366-1 §4.1.2", statut:"", resp:"", comm:"Processus de supervision et de surveillance du logiciel", critChecks:[true,true,false,false] },
-  { n:"B.4", act:"Suivre régulièrement l'avancement du processus d'aptitude à l'utilisation (revues, indicateurs, actions correctives).", obj:"Détecter précocement les écarts et adapter le processus si nécessaire.", ref:"IEC 62366-1 §5.8", statut:"", resp:"", comm:"Rapport d'analyse de risques résiduels", critChecks:[true,true,false,false] },
+  { n:"B.1", act:"Établir, documenter, mettre en œuvre et maintenir un processus d'ingénierie de l'aptitude à l'utilisation (PIAU).", obj:"Assurer un pilotage clair du processus d'aptitude à l'utilisation sur tout le cycle de vie.", ref:"IEC 62366-1 §4.1.1", statut:"", resp:"", comm:"Dossier d'analyse de risques", critChecks:[true,true,true,false] },
+  { n:"B.2", act:"Adapter le niveau d'effort et les méthodes d'ingénierie selon la complexité de l'interface, la gravité des risques et les caractéristiques du dispositif.", obj:"Structurer et documenter l'ensemble des activités liées à l'aptitude à l'utilisation.", ref:"IEC 62366-1 §5.1", statut:"", resp:"", comm:"Dossier d'aptitude à l'utilisation", critChecks:[true,true,true,false] },
+  { n:"B.3", act:"Consigner tous les résultats du processus d'ingénierie dans le Dossier d'Ingénierie de l'Aptitude à l'Utilisation (DIAU).", obj:"Garantir une vision partagée des exigences d'utilisation et des risques associés.", ref:"IEC 62366-1 §4.1.2", statut:"", resp:"", comm:"Processus de supervision et de surveillance du logiciel", critChecks:[true,true,false,false] },
+  { n:"B.4", act:"Documenter les mesures de supervision humaine", obj:"Détecter précocement les écarts et adapter le processus si nécessaire.", ref:"IEC 62366-1 §5.8", statut:"", resp:"", comm:"Rapport d'analyse de risques résiduels", critChecks:[true,true,false,false] },
 
   { section: true, titre: "C – MAÎTRISE DU RISQUE D'USAGE" },
   { n:"C.1", act:"Transparence et informations à l'utilisateur (UI + IFU).", obj:"Permettre un usage avisé et éviter les interprétations erronées.", ref:"Règlement (UE) 2024/1689 art.13", statut:"", resp:"", comm:"Documents et informations d'accompagnement du logiciel", critChecks:[true,true,true,true] },
@@ -427,7 +421,7 @@ const checklist = [
   { n:"C.13", act:"Informer sur la maintenance, les mises à jour et la durée de vie.", obj:"Garantir que l'utilisateur sache comment maintenir la performance et la sécurité.", ref:"Règlement (UE) 2024/1689 art. 13 §3 e", statut:"", resp:"", comm:"Plan de formation et maintenance du logiciel", critChecks:[true,true,true,false] },
   { n:"C.14", act:"Intégrer les mesures de maîtrise du risque dans les exigences logicielles.", obj:"Inclure les mesures de maitrise du risque du logiciel dans la conception.", ref:"IEC 62304 §5.2.3", statut:"", resp:"", comm:"Exigences logicielles incluant les mesures de maîtrise", critChecks:[true,true,true,true] },
 
-  { section: true, titre: "D – SURVEILLANCE DU SYSTÈME PAR LES UTILISATEURS / RISQUES LIÉS À L'UTILISATION" },
+  { section: true, titre: "D – SURVEILLANCE DU SYSTÈME PAR LES UTILISATEURS" },
   { n:"D.1", act:"Conception de la supervision humaine (HITL/HOTL).", obj:"Garantir la possibilité d'intervenir et corriger.", ref:"Règlement (UE) 2024/1689 art.14", statut:"", resp:"", comm:"Plan de surveillance post-commercialisation", critChecks:[true,true,true,true] },
   { n:"D.2", act:"Identifier les caractéristiques de l'interface utilisateur liées à la sécurité et les erreurs d'utilisation possibles via l'analyse des tâches.", obj:"Identifier les facteurs de risque liés à l'interface afin de prévenir les usages incorrects.", ref:"IEC 62366-1 §5.2", statut:"", resp:"", comm:"Analyse des tâches et facteurs de risque UI", critChecks:[true,true,true,false] },
   { n:"D.3", act:"Identifier les phénomènes dangereux et situations dangereuses connus ou prévisibles liés à l'utilisation du dispositif médical.", obj:"Reconnaître les dangers potentiels dès la conception.", ref:"IEC 62366-1 §5.3", statut:"", resp:"", comm:"Analyse des phénomènes et situations dangereuses", critChecks:[true,true,false,false] },
@@ -437,7 +431,7 @@ const checklist = [
   { n:"D.7", act:"Fournir une transparence suffisante pour interpréter les sorties.", obj:"Concevoir le système de sorte que les résultats puissent être compris et expliqués.", ref:"Règlement (UE) 2024/1689 art. 13 §1 & §3 b (iv, vii)", statut:"", resp:"", comm:"Documentation de la logique de décision, écrans explicatifs", critChecks:[true,true,true,true] },
   { n:"D.8", act:"Prévoir des mécanismes d'alerte et de retour utilisateur.", obj:"Permettre de signaler un dysfonctionnement, une incertitude ou un doute sur la sortie.", ref:"Règlement (UE) 2024/1689 art. 14 §2-3", statut:"", resp:"", comm:"Fonctions de feedback, boutons de signalement, journaux", critChecks:[true,true,true,true] },
   { n:"D.9", act:"Garantir la traçabilité des interactions homme-IA.", obj:"Enregistrer automatiquement les événements d'utilisation pertinents.", ref:"Règlement (UE) 2024/1689 art. 12 §1-3 a-d", statut:"", resp:"", comm:"Logs et journaux d'interactions", critChecks:[true,true,true,false] },
-  { n:"D.10", act:"Expliquer la logique du modèle ou les critères de décision.", obj:"Permettre à l'utilisateur de comprendre pourquoi une sortie ou recommandation a été produite.", ref:"Règlement (UE) 2024/1689 art. 13 §1 & 15 §1", statut:"", resp:"", comm:"Documentation expliquant la logique du modèle", critChecks:[true,true,true,true] },
+  { n:"D.10", act:"Expliquer la logique du modèle ou les critères de décision.", obj:"Permettre à l'utilisateur de comprendre pourquoi une sortie ou recommandation a été produite.", ref:"Règlement (UE) 2024/1689 art. 13 §1", statut:"", resp:"", comm:"Documentation expliquant la logique du modèle", critChecks:[true,true,true,true] },
 
   { section: true, titre: "E – AMÉLIORATION CONTINUE" },
   { n:"E.1", act:"Plan de PMS IA et de détection de dérive (prévu dès la conception).", obj:"Faciliter le suivi post-marché et l'amélioration continue.", ref:"Règlement (UE) 2024/1689 art.72 (PMS), art.73 (incidents)", statut:"", resp:"", comm:"Plan de surveillance post-commercialisation", critChecks:[true,true,true,false] },
@@ -487,10 +481,9 @@ function showTab(tab) {
 // -------- 3. Calcul du score --------
 function computeGlobalCoef() {
   const classe = parseFloat(document.getElementById('classeMdr').value || "1");
-  const ai = parseFloat(document.getElementById('niveauAi').value || "1");
   const seku = parseFloat(document.getElementById('iaSecu').value || "1");
   const role = parseFloat(document.getElementById('roleAuto').value || "1");
-  return classe * ai * seku * role;
+  return classe * seku * role; // plus de niveau AI Act
 }
 
 function applyClassification() {
@@ -510,11 +503,11 @@ function applyClassification() {
 
 function getScoreColor(score) {
   if (isNaN(score)) return '';
-  if (score >= 0 && score <= 12) return '#5cb85c';        // Vert
-  if (score >= 13 && score <= 24) return '#f0ad4e';       // Orange
-  if (score >= 25 && score <= 75) return '#d9534f';       // Rouge
-  return '';
+  if (score < 7) return '#5cb85c';        // VERT (0 à <7)
+  if (score >= 7 && score < 14) return '#f0ad4e';  // ORANGE (7 à <14)
+  return '#d9534f';                        // ROUGE (>=14)
 }
+
 
 
 // -------- 4. Affichage de la checklist --------
@@ -673,9 +666,9 @@ function generatePDF() {
 
   // ---- Bloc classification dans le PDF ----
   const classeMdr = document.getElementById('classeMdr')?.value || '—';
-  const niveauAi = document.getElementById('niveauAi')?.value || '—';
   const iaSecu = document.getElementById('iaSecu')?.value || '—';
   const roleAuto = document.getElementById('roleAuto')?.value || '—';
+
 
   let coefText = '—';
   try {
@@ -690,7 +683,7 @@ function generatePDF() {
   doc.text("Classification du dispositif :", 14, 28);
 
   doc.setFont(undefined, 'normal');
-  doc.text(`Classe MDR: ${classeMdr} | Niveau AI Act: ${niveauAi} | IA composante de sécurité: ${iaSecu} | Rôle autonome: ${roleAuto}`, 14, 33);
+  doc.text(`Classe MDR: ${classeMdr} | IA composante de sécurité: ${iaSecu} | Rôle autonome: ${roleAuto}`, 14, 33);
   doc.text(`Score de classification global: ${coefText}`, 14, 38);
 
   // Décaler le début du tableau après le bloc classification
@@ -736,11 +729,11 @@ function generatePDF() {
         const score = parseFloat(raw);
         if (!isNaN(score)) {
             let fill = null;
-            if (score >= 0 && score <= 12) {
+            if (score >= 0 && score < 7) {
             fill = [92, 184, 92];      // Vert
-            } else if (score >= 13 && score <= 24) {
+            } else if (score >= 7 && score < 14) {
             fill = [240, 173, 78];     // Orange
-            } else if (score >= 25 && score <= 75) {
+            } else if (score >= 14 && score < 36) {
             fill = [217, 83, 79];      // Rouge
             }
             if (fill) {
