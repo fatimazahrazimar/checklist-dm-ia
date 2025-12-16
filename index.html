@@ -53,24 +53,33 @@
   </div>
 </header>
 
-<div class="container">
-  <div id="connexion">
-    <h2>Connexion</h2>
-    <label>Nom : <input type="text" id="nom"></label><br>
-    <label>Prénom : <input type="text" id="prenom"></label><br>
-    <label>Société : <input type="text" id="societe"></label><br>
-    <label>Profession :
-      <select id="profession">
-        <option value="">Choisir</option>
-        <option>QARA</option>
-        <option>Développeur</option>
-        <option>Concepteur</option>
-        <option>Etudiant OU Professeur</option>
-        <option>Autre</option>
-      </select>
-    </label><br>
-    <button onclick="startApp()">Entrer</button>
+<div class="container"> <div id="connexion" style="margin: 30px auto;"> <h2>Connexion / Inscription</h2>
+  <label>Nom : <input type="text" id="nom"></label><br>
+  <label>Prénom : <input type="text" id="prenom"></label><br>
+  
+  <label>Mot de passe : 
+    <input type="password" id="motdepasse" style="width: 95%; padding: 7px; margin: 8px 0 16px 0; border-radius: 4px; border:1px solid #ccc;">
+  </label><br>
+
+  <label>Société : <input type="text" id="societe"></label><br>
+  <label>Profession :
+    <select id="profession">
+      <option value="">Choisir</option>
+      <option>QARA</option>
+      <option>Développeur</option>
+      <option>Concepteur</option>
+      <option>Etudiant OU Professeur</option>
+      <option>Autre</option>
+    </select>
+  </label><br>
+  
+  <div style="margin-top: 15px;">
+    <button onclick="handleLogin()">Se Connecter</button>
+    <button onclick="handleRegister()" style="background-color: #5cb85c; margin-left: 10px;">S'inscrire</button>
   </div>
+  
+  <p id="error-msg" style="color: red; display: none; margin-top: 10px;"></p>
+</div>
 
   <div id="app" class="hide">
    <nav>
@@ -196,8 +205,7 @@
 </div>
 
 
-  <!-- Glossaire -->
-   <div id="glossaire" class="hide">
+  <div id="glossaire" class="hide">
    <h2>Glossaire</h2>
   <table style="width:100%; border-collapse:collapse; margin-top:15px;">
     <thead>
@@ -335,12 +343,7 @@
   </table>
 </div>
 
-<!-- Fin Glossaire -->
-
-
-
-<!-- CheckList -->
-    <div id="checklist">
+<div id="checklist">
       <div style="display:flex; justify-content:space-between; align-items:center;">
         <h2>Checklist interactive</h2>
         <div class="pdf-btn-container">
@@ -369,19 +372,19 @@
         </thead>
         <tbody id="tbodyChecklist"></tbody>
       </table>
+      <div style="text-align: right; margin-top: 20px; padding: 15px; background: #f0f0f0; border-radius: 8px;">
+        <button onclick="saveDataToFirebase()" style="background-color: #04284b; padding: 12px 24px; font-size: 1.1em;">
+           Enregistrer la checklist
+        </button>
+      </div>
+    </div>
       <p class="small">
         Dans la colonne “Commentaires / Preuves”, les exemples indiquent les types de documents attendus
         (rapports, plans, dossiers) et peuvent guider où ranger vos fichiers sur votre propre système.
       </p>
     </div>
 
-<!-- Fin CheckList -->
-
-
-
-
-
-    <div id="faq" class="hide">
+<div id="faq" class="hide">
       <h2>FAQ principale</h2>
 
       <h3>Questions concernant la check-list</h3>
@@ -433,9 +436,6 @@
         (détermine le niveau de rigueur du développement).
       </div>
     </div>
-  </div>
-</div>
-
-<script src="script.js" />
+  </div> </div> <script src="script.js" />
 </body>
 </html>
