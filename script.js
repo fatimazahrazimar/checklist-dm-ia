@@ -141,7 +141,7 @@ async function handleLogin() {
       return;
     }
 
-    
+
     // Connexion réussie
     currentUserKey = userId;
     
@@ -520,3 +520,10 @@ function generatePDF() {
   const timestamp = new Date().toISOString().split('T')[0];
   doc.save(`Checklist-${prenom}-${nom}-${timestamp}.pdf`);
 }
+// -------- 7. Expose functions globally (IMPORTANT for Vercel) --------
+window.handleLogin = handleLogin;
+window.handleRegister = handleRegister;
+window.saveDataToFirebase = saveDataToFirebase;
+window.generatePDF = generatePDF;
+window.showTab = showTab;
+window.applyClassification = applyClassification;
