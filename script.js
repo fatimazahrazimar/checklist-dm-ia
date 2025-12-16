@@ -141,6 +141,7 @@ async function handleLogin() {
       return;
     }
 
+    
     // Connexion réussie
     currentUserKey = userId;
     
