@@ -1,5 +1,5 @@
 // -------- 0. CONFIGURATION FIREBASE --------
-const FIREBASE_URL = 'https://checklist-reglementaire-dm-ia-default-rtdb.europe-west1.firebasedatabase.app';
+const FIREBASE_URL = 'https://checklist-dm-ia-default-rtdb.europe-west1.firebasedatabase.app/';
 
 let currentUserKey = null; // ID unique de l'utilisateur connecté
 
